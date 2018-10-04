@@ -17,55 +17,62 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        String pathToProjectJsonFile = "/home/alex/git/resp_java/src/main/resources/project.json";
-        String pathToRespondentsCsvFile = "/home/alex/git/resp_java/src/main/resources/respondents.csv";
+        // Init and validate parser arguments
+        ApplicationArguments appArgs = new ApplicationArguments(args);
 
-        // Load up the respondents.csv file into a List<Respondent>
-        RespondentsCsvReader respondentsCsvReader = new RespondentsCsvReader(pathToRespondentsCsvFile);
-        List<Respondent> respondents = respondentsCsvReader.getRespondents();
+        if (appArgs.hasProjectJson() && appArgs.hasRespondentsCsv()) {
 
-        // Load up the project.json into a ProjectJson object
-        ProjectJsonReader projectJsonReader = new ProjectJsonReader(pathToProjectJsonFile);
-        ProjectJson projectJson = projectJsonReader.createProjectJson();
+            // Load up the respondents.csv file into a List<Respondent>
+            RespondentsCsvReader respondentsCsvReader = new RespondentsCsvReader(appArgs.getRespondentsCsv());
+            List<Respondent> respondents = respondentsCsvReader.getRespondents();
 
-        // Get the main cities from ProjectJson and sort them A-Z, the will be used for display.
-        List<City> cities = projectJson.getCitiesSorted();
+            // Load up the project.json into a ProjectJson object
+            ProjectJsonReader projectJsonReader = new ProjectJsonReader(appArgs.getProjectJson());
+            ProjectJson projectJson = projectJsonReader.createProjectJson();
 
-        Map<String, List<PrintableRespondent>> respondentMap = new HashMap<>();
+            // Get the main cities from ProjectJson and sort them A-Z, the will be used for display.
+            List<City> cities = projectJson.getCitiesSorted();
 
-        // insertion order matters for displaying A-Z by City, State, Country
-        Map<String, String> locationMap = new LinkedHashMap<>();
+            Map<String, List<PrintableRespondent>> respondentMap = new HashMap<>();
 
-        // for each city, get the respondents who reside within 100 km
-        for (City city : cities) {
-            locationMap.put(city.getLocation().getId(), city.getLocation().toString());
-            List<PrintableRespondent> nearestRespondents = new ArrayList<>();
-            Double cityLatitude = city.getLocation().getLocation().getLatitude();
-            Double cityLongitude = city.getLocation().getLocation().getLongitude();
+            // insertion order matters for displaying A-Z by City, State, Country
+            Map<String, String> locationMap = new LinkedHashMap<>();
 
-            for (Respondent respondent : respondents) {
-                // calculate the distance between city and respondent city
-                Double distance = DistanceCalculator.getDistanceInKilometersBetweenLatLongPoints(
-                        cityLatitude,
-                        cityLongitude,
-                        respondent.getLatitude(),
-                        respondent.getLongitude());
+            // for each city, get the respondents who reside within 100 km
+            for (City city : cities) {
 
-                if (distance <= 100) {
-                    nearestRespondents.add(new PrintableRespondent(
-                            respondent.getFirstName(),
-                            respondent.getGender(),
-                            respondent.getLocation(),
-                            city.getLocation().toString(),
-                            distance
-                    ));
+                List<PrintableRespondent> nearestRespondents = new ArrayList<>();
+                Double cityLatitude = city.getLocation().getLocation().getLatitude();
+                Double cityLongitude = city.getLocation().getLocation().getLongitude();
+
+                for (Respondent respondent : respondents) {
+                    // calculate the distance between city and respondent city
+                    Double distance = DistanceCalculator.getDistanceInKilometersBetweenLatLongPoints(
+                            cityLatitude,
+                            cityLongitude,
+                            respondent.getLatitude(),
+                            respondent.getLongitude());
+
+                    if (distance <= appArgs.getDistanceInKilometers()) {
+                        nearestRespondents.add(new PrintableRespondent(
+                                respondent.getFirstName(),
+                                respondent.getGender(),
+                                respondent.getLocation(),
+                                city.getLocation().toString(),
+                                distance
+                        ));
+                    }
+                }
+
+                // Do not show locations if there are no respondents
+                if (nearestRespondents.size() > 0) {
+                    locationMap.put(city.getLocation().getId(), city.getLocation().toString());
+                    nearestRespondents.sort(Comparator.comparing(a -> a.getFirstName().toLowerCase()));
+                    respondentMap.put(city.getLocation().getId(), nearestRespondents);
                 }
             }
 
-            nearestRespondents.sort(Comparator.comparing(a -> a.getFirstName().toLowerCase()));
-            respondentMap.put(city.getLocation().getId(), nearestRespondents);
+            RespondentConsoleLogger.print(locationMap, respondentMap);
         }
-
-        RespondentConsoleLogger.print(locationMap, respondentMap);
     }
 }
