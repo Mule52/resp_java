@@ -13,8 +13,8 @@ import static org.junit.Assert.assertNotNull;
 
 public class RespondentsCsvReaderTest {
 
-    // TODO: add more tests around the sie of the respondents.csv file
-    // TODO: how much data can be handled, how does it perform
+    // TODO: add more tests around the size of the respondents.csv file
+    // TODO: how much data can be handled, how does it perform?
 
     String pathToFile = "src/main/resources/respondents.csv";
     RespondentsCsvReader respondentsCsvReader;
