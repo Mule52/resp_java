@@ -25,9 +25,17 @@ https://maven.apache.org/install.html.
 
 
 ### Instructions to run the project
-Once Java is installed, download the jar file to a directory and run the following commands in a terminal/console.  
+Once Java is installed, download the respondents-matching-app.zip (/dist/respondents-matching-app.zip) file to a 
+directory and run the following commands in a terminal/console. The zip file is located here 
+https://github.com/Mule52/resp_java/blob/master/dist/respondents-matching-app.zip.   
   
-There are two required command line arguments and two optional arguments.  
+  
+Unzip the zip file to a directory, there should be three files extracted:
+*  project.json
+*  respondent-jar-with-dependencies.jar
+*  respondents.csv
+
+There are two required command line arguments and two optional arguments to run the app via the command line.
   
 Required Arguments:  
 * projectJson=/path/to/the/project.json.file
@@ -56,6 +64,13 @@ java -cp "respondent-jar-with-dependencies.jar" com.respondent.Main
 --isMiles=true
 
 ### Building
+
+Using Git, clone the repo locally in a directory.  
+
+git clone https://github.com/Mule52/resp_java.git  
+
+Then run Maven in the root of that directory.  
+
 mvn clean compile package
 <br/>
 
