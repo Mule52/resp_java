@@ -30,12 +30,12 @@ Once Java is installed, download the jar file to a directory and run the followi
 There are two required command line arguments and two optional arguments.  
   
 Required Arguments:  
-*projectJson=/path/to/the/project.json.file
-*respondentsCsv=/path/to/the/respondents.csv.file
+* projectJson=/path/to/the/project.json.file
+* respondentsCsv=/path/to/the/respondents.csv.file
   
 Optional Arguments:  
-*distance=100 [integer value 0 to 40075, as 40075 is the maximum number of kilometers around earth]
-*isMiles=true [true or false, true if the desire output should be in miles, otherwise false will be in kilometers]  
+* distance=100 [integer value 0 to 40075, as 40075 is the maximum number of kilometers around earth]
+* isMiles=true [true or false, true if the desire output should be in miles, otherwise false will be in kilometers]  
   
 Example Command Line Arguments:  
 java -cp "./target/respondent-jar-with-dependencies.jar" com.respondent.Main 
@@ -57,4 +57,4 @@ java -cp "./target/respondent-jar-with-dependencies.jar" com.respondent.Main
 
 ## Running the tests
 
-The tests can be run via Maven but running "mvn test" from the root of the proejct on the terminal. 
+The tests can be run via Maven by running "mvn test" from the root of the project on the command line. 
