@@ -30,7 +30,7 @@ public class Main {
             ProjectJsonReader projectJsonReader = new ProjectJsonReader(appArgs.getProjectJson());
             ProjectJson projectJson = projectJsonReader.createProjectJson();
 
-            // Get the main cities from ProjectJson and sort them A-Z, the will be used for display.
+            // Get the main cities from ProjectJson and sort them A-Z, this will be used for display.
             List<City> cities = projectJson.getCitiesSorted();
 
             Map<String, List<PrintableRespondent>> respondentMap = new HashMap<>();
