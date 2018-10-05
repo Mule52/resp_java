@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class DistanceCalculatorTests {
+public class DistanceCalculatorTest {
 
     double baltimoreLat = 39.2904;
     double baltimoreLong = -76.6122;
@@ -17,6 +17,9 @@ public class DistanceCalculatorTests {
 
     double sydneyLat = -33.8688;
     double sydneyLong = 151.2093;
+
+    // TODO: add perf tests
+    // TODO: how large of files can be loaded, what are the response times?
 
     @Test
     public void distanceBetweenIdenticalLatLongPointsShouldBeZero(){

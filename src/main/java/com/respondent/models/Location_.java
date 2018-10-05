@@ -8,6 +8,7 @@ public class Location_ {
     @SerializedName("latitude")
     @Expose
     private Double latitude;
+
     @SerializedName("longitude")
     @Expose
     private Double longitude;
@@ -16,16 +17,8 @@ public class Location_ {
         return latitude;
     }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
     public Double getLongitude() {
         return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
     }
 
 }

@@ -12,12 +12,6 @@ public class ApplicationArguments {
 
     public ApplicationArguments(String[] args) {
 
-        // TODO: used only for local debugging
-//        args = new String[]{"--projectJson=/home/alex/git/resp_java/src/main/resources/project.json",
-//                "--respondentsCsv=/home/alex/git/resp_java/src/main/resources/respondents.csv",
-//                "--distance=0",
-//                "--isMiles=false"};
-
         if (args.length < 2 || args.length > 4){
             throw new IllegalArgumentException("Valid program arguments are --projectJson=/path/to/project.json " +
                     "--respondentsCsv=/path/to/respondents.csv --distance=100 (optional) --isMiles=true (optional)");
