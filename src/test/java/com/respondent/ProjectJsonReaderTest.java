@@ -14,8 +14,8 @@ import static org.junit.Assert.assertNotNull;
 
 public class ProjectJsonReaderTest {
 
-    // TODO: add more tests around the sie of the project.json file
-    // TODO: how much data can be handled, how does it perform
+    // TODO: add more tests around the size of the project.json file
+    // TODO: how much data can be handled, how does it perform?
 
     private String pathToFile = "src/main/resources/project.json";
     private ProjectJsonReader projectJsonReader;
