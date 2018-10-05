@@ -9,17 +9,24 @@ public class RespondentConsoleLogger {
 
     public RespondentConsoleLogger() {}
 
-    public static void print(Map<String, String> locationMap, Map<String, List<PrintableRespondent>> respondentMap) {
+    public static void print(Map<String, String> locationMap, Map<String, List<PrintableRespondent>> respondentMap,
+                             int distance, boolean isMiles) {
         // Print our sorted data
-        System.out.println("Project Location:");
+        System.out.println("");
+        System.out.println(String.format(
+                "The following is a list of project locations with respondents that are located within %d %s of that location.",
+                distance, isMiles ? "mi." : "km"));
 
         for (Map.Entry<String, String> entry : locationMap.entrySet()) {
-            System.out.println(String.format("\t%s", entry.getValue()));
+            System.out.println("");
+            System.out.println(String.format("Project Location: %s", entry.getValue()));
 
             List<PrintableRespondent> printableRespondents = respondentMap.get(entry.getKey());
             printableRespondents.forEach(pr -> {
-                System.out.println(String.format("\t\t%s", pr.toString()));
+                System.out.println(String.format("\t%s", pr.toString()));
             });
         }
+
+        System.out.println("");
     }
 }

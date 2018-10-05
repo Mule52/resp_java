@@ -7,18 +7,20 @@ public class ApplicationArguments {
 
     private String projectJson;
     private String respondentsCsv;
-    private int distanceInKilometers;
+    private int distance;
+    private boolean isMiles;
 
     public ApplicationArguments(String[] args) {
 
         // TODO: used only for local debugging
-        args = new String[]{"--projectJson=/home/alex/git/resp_java/src/main/resources/project.json",
-                "--respondentsCsv=/home/alex/git/resp_java/src/main/resources/respondents.csv",
-                "--distanceInKilometers=50"};
+//        args = new String[]{"--projectJson=/home/alex/git/resp_java/src/main/resources/project.json",
+//                "--respondentsCsv=/home/alex/git/resp_java/src/main/resources/respondents.csv",
+//                "--distance=0",
+//                "--isMiles=false"};
 
-        if (args.length < 2 || args.length > 3){
+        if (args.length < 2 || args.length > 4){
             throw new IllegalArgumentException("Valid program arguments are --projectJson=/path/to/project.json " +
-                    "--respondentsCsv=/path/to/respondents.csv --distanceInKilometers=100 (optional)");
+                    "--respondentsCsv=/path/to/respondents.csv --distance=100 (optional) --isMiles=true (optional)");
         }
 
         OptionParser parser = new OptionParser();
@@ -34,16 +36,29 @@ public class ApplicationArguments {
                 .defaultsTo("/respondents.csv")
                 .required();
 
-        parser.accepts( "distanceInKilometers" )
+        parser.accepts( "distance" )
                 .withOptionalArg()
                 .ofType(Integer.class)
                 .defaultsTo(100);
 
+        parser.accepts("isMiles")
+                .withOptionalArg()
+                .ofType(Boolean.class)
+                .defaultsTo(false);
+
         OptionSet options = parser.parse(args);
         projectJson = options.has("projectJson") ? options.valueOf("projectJson").toString() : null;
-        respondentsCsv = options.has("respondentsCsv") ? options.valueOf("respondentsCsv").toString() : null;
-        distanceInKilometers = options.has("distanceInKilometers") ?
-                Integer.parseInt(options.valueOf("distanceInKilometers").toString()) : 100;
+        respondentsCsv = options.has("respondentsCsv") ?
+                options.valueOf("respondentsCsv").toString() : null;
+        distance = options.has("distance") ?
+                Integer.parseInt(options.valueOf("distance").toString()) : 100;
+        isMiles = options.has("isMiles") ?
+                Boolean.parseBoolean(options.valueOf("isMiles").toString()) : false;
+
+        int maxKmAroundTheEarth = 40075;
+        if (distance < 0 || distance > maxKmAroundTheEarth){
+            throw new IllegalArgumentException("distance is an optional argument, with valid values from 0 - 40075.");
+        }
     }
 
     public boolean hasProjectJson(){
@@ -62,7 +77,11 @@ public class ApplicationArguments {
         return respondentsCsv;
     }
 
-    public int getDistanceInKilometers() {
-        return distanceInKilometers;
+    public int getDistance() {
+        return distance;
+    }
+
+    public boolean isMiles() {
+        return isMiles;
     }
 }

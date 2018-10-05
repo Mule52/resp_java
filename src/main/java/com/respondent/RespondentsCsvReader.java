@@ -3,6 +3,7 @@ package com.respondent;
 import com.opencsv.CSVReader;
 import com.respondent.models.Respondent;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.List;
 
 public class RespondentsCsvReader {
 
-    // "/home/alex/git/resp_java/src/main/resources/respondents.csv"
     private String pathToRespondentsCsvFile;
 
     public RespondentsCsvReader(String pathToRespondentsCsvFile) {
@@ -39,13 +39,13 @@ public class RespondentsCsvReader {
                 }
                 rowIndex++;
             }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("respondents.csv could not be found");
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException("respondents.csv could not be loaded");
         }
-//        csvReader.close();
+
         return respondents;
     }
-
-
 }

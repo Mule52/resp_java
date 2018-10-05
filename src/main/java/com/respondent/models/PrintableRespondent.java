@@ -5,21 +5,24 @@ public class PrintableRespondent {
     private String firstName;
     private String gender;
     private String respondentLocation;
-    private String distanceFromLocation;
-    private Double distanceFromLocationInKm;
+    private String fromLocationTitle;
+    private Double distanceFromLocation;
+    private boolean isMiles;
 
     public PrintableRespondent(
             String firstName,
             String gender,
             String respondentLocation,
-            String distanceFromLocation,
-            Double distanceFromLocationInKm) {
+            String fromLocationTitle,
+            Double distanceFromLocation,
+            boolean isMiles) {
 
         this.firstName = firstName;
         this.gender = gender;
         this.respondentLocation = respondentLocation;
+        this.fromLocationTitle = fromLocationTitle;
         this.distanceFromLocation = distanceFromLocation;
-        this.distanceFromLocationInKm = distanceFromLocationInKm;
+        this.isMiles = isMiles;
     }
 
     public String getFirstName() {
@@ -28,11 +31,12 @@ public class PrintableRespondent {
 
     @Override
     public String toString() {
-        return String.format("%s (%s from %s) is %.2f km from %s",
+        return String.format("%s (%s from %s) is %.1f %s from %s",
                 firstName,
                 gender,
                 respondentLocation,
-                distanceFromLocationInKm,
-                distanceFromLocation);
+                distanceFromLocation,
+                isMiles ? "mi." : "km",
+                fromLocationTitle);
     }
 }

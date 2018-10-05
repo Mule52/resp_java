@@ -56,7 +56,10 @@
                 <configuration>
                     <mainClass>com.respondent.Main</mainClass>
                     <arguments>
-                        <distanceInKilometers>100</distanceInKilometers>
+                        <!-- distance: 0 or more km/miles, is optional-->
+                        <distance>100</distance>
+                        <!-- isMiles: true or false, is optional-->
+                        <isMiles>false</isMiles>
                     </arguments>
                 </configuration>
             </plugin>
@@ -81,6 +84,21 @@
             <groupId>net.sf.jopt-simple</groupId>
             <artifactId>jopt-simple</artifactId>
             <version>5.0.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

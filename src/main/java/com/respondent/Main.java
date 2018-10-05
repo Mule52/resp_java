@@ -47,19 +47,21 @@ public class Main {
 
                 for (Respondent respondent : respondents) {
                     // calculate the distance between city and respondent city
-                    Double distance = DistanceCalculator.getDistanceInKilometersBetweenLatLongPoints(
+                    Double distance = DistanceCalculator.getDistanceBetweenLatLongPoints(
                             cityLatitude,
                             cityLongitude,
                             respondent.getLatitude(),
-                            respondent.getLongitude());
+                            respondent.getLongitude(),
+                            appArgs.isMiles());
 
-                    if (distance <= appArgs.getDistanceInKilometers()) {
+                    if (distance <= appArgs.getDistance()) {
                         nearestRespondents.add(new PrintableRespondent(
                                 respondent.getFirstName(),
                                 respondent.getGender(),
                                 respondent.getLocation(),
                                 city.getLocation().toString(),
-                                distance
+                                distance,
+                                appArgs.isMiles()
                         ));
                     }
                 }
@@ -72,7 +74,7 @@ public class Main {
                 }
             }
 
-            RespondentConsoleLogger.print(locationMap, respondentMap);
+            RespondentConsoleLogger.print(locationMap, respondentMap, appArgs.getDistance(), appArgs.isMiles());
         }
     }
 }
